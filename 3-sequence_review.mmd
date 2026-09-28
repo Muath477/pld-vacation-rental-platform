@@ -1,0 +1,8 @@
+sequenceDiagram
+    participant Guest
+    participant Booking
+
+    Guest->>Booking: leave_review(rating, comment)
+    create participant Review
+    Booking->>Review: create_review(rating, comment)
+    Review-->>Guest: review submitted

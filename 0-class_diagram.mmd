@@ -1,0 +1,42 @@
+classDiagram
+    class User {
+        -name: str
+        -email: str
+        +list_property(property: Property)
+        +create_booking(property: Property, start_date: str, end_date: str) Booking
+    }
+
+    class Property {
+        -title: str
+        -location: str
+        -price_per_night: float
+        +is_available(start_date: str, end_date: str) bool
+    }
+
+    class Booking {
+        -start_date: str
+        -end_date: str
+        -status: str
+        +confirm_booking()
+        +cancel_booking()
+        +leave_review(rating: int, comment: str) Review
+    }
+
+    class Payment {
+        -amount: float
+        -payment_date: str
+        -status: str
+        +process_payment()
+        +refund()
+    }
+
+    class Review {
+        -rating: int
+        -comment: str
+    }
+
+    User "1" -- "0..*" Property : hosts
+    User "1" -- "0..*" Booking : makes
+    Property "1" -- "0..*" Booking
+    Booking "1" *-- "0..1" Payment
+    Booking "1" *-- "0..1" Review

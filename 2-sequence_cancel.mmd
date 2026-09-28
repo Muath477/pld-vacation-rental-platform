@@ -1,0 +1,9 @@
+sequenceDiagram
+    participant Guest
+    participant Booking
+    participant Payment
+
+    Guest->>Booking: cancel_booking()
+    Booking->>Payment: refund()
+    Payment-->>Booking: refund processed
+    Booking-->>Guest: booking cancelled
