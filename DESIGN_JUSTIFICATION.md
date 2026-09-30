@@ -34,13 +34,13 @@ scope.
 
 ## Relationships and multiplicities
 
-- `User "1" -- "0..*" Property` — a host can list zero or many
+- `User "1" -- "0..*" Property` : a host can list zero or many
   properties; each property belongs to exactly one host.
-- `User "1" -- "0..*" Booking` — a guest can make zero or many
+- `User "1" -- "0..*" Booking` : a guest can make zero or many
   bookings; each booking belongs to exactly one guest.
-- `Property "1" -- "0..*" Booking` — a property can be booked many
+- `Property "1" -- "0..*" Booking` : a property can be booked many
   times over its lifetime; each booking targets exactly one property.
-- `Booking "1" *-- "0..1" Review` — a review is tied to the stay it came
+- `Booking "1" *-- "0..1" Review` : a review is tied to the stay it came
   from (composition); not every booking gets reviewed.
 
 ## Alternatives considered
