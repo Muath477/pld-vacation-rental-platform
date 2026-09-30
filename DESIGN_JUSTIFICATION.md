@@ -1,17 +1,17 @@
-# Design Justification — Vacation Rental Platform
+# Design Justification  Vacation Rental Platform
 
 ## Entities and responsibilities
 
-- **User** — a person who can list properties (as a host) and/or make
+- **User** : a person who can list properties (as a host) and/or make
   bookings (as a guest). One class instead of separate `Host`/`Guest`
   classes, because on a real platform the same person plays both roles.
-- **Property** — a listing owned by a host. Knows how to check its own
+- **Property** : a listing owned by a host. Knows how to check its own
   availability for a date range.
-- **Booking** — a reservation of one property by one guest for a date
+- **Booking** : a reservation of one property by one guest for a date
   range. Owns its own lifecycle: confirming, cancelling, and triggering
   a review. Also knows whether its dates overlap a given range
   (`overlaps`), which `Property.is_available` uses.
-- **Review** — feedback tied to one specific booking/stay.
+- **Review** : feedback tied to one specific booking/stay.
 
 ## Key design decisions
 
