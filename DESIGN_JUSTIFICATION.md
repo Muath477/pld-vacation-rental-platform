@@ -32,6 +32,16 @@ modeling payments and external services, so there is no `Payment` class.
 Cancelling a booking only changes its status; money handling is out of
 scope.
 
+**Rejecting a booking uses `cancel_booking()`.** Both a guest cancelling
+and a host rejecting move the booking to the same final state. We did not
+add `reject_booking()` to avoid a duplicate method. The trade-off: we
+cannot tell later who ended the booking.
+
+**Booking lifecycle uses a `status` field.** A new booking starts as
+`pending`. The host then confirms it (`confirmed`) or rejects it
+(`cancelled`). A guest can also cancel a booking.
+
+
 ## Relationships and multiplicities
 
 - `User "1" -- "0..*" Property` : a host can list zero or many
@@ -63,10 +73,10 @@ scope.
   is simply marked `cancelled` (not deleted) so history is kept.
 - Review as a composition of Booking keeps the model simple: a review
   cannot exist without its stay.
+- `Booking.overlaps()` ignores cancelled bookings, so dates of a rejected
+  or cancelled booking become available again.
 
 ## What we'd simplify or extend if requirements changed
 
 - Photos/amenities would be a new `Amenity`/`Photo` class associated
   with `Property`, without touching the booking/review flow.
-- Host approval of booking requests would be an extra `Booking.status`
-  transition, with no change to the class structure.

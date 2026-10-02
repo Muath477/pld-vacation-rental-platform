@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant User as User (host)
+    participant Booking
+
+    Note over Booking: status is pending, waiting for the host's decision
+    
+    alt host accepts
+        User ->> Booking: confirm_booking()
+        Note over Booking: status: pending → confirmed 
+        Booking -->> User: booking confirmed
+
+    else host rejects
+        User ->> Booking: cancel_booking()
+        Note over Booking: status: pending → cancelled
+        Booking -->> User: booking cancelled
+    end
