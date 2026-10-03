@@ -1,0 +1,17 @@
+sequenceDiagram
+    actor Guest
+    participant Booking
+
+    Guest->>Booking: leave_review(rating, comment)
+    Note over Booking: Check caller owns booking, status is confirmed,<br/>stay has ended, no previous review,<br/>and rating is valid
+
+    alt Review is allowed
+        create participant Review
+        Booking->>Review: Create review
+        Note over Review: Store rating and comment
+        Note over Booking: Associate review with this booking
+        Review-->>Booking: new review
+        Booking-->>Guest: review submitted
+    else Review is not allowed
+        Booking-->>Guest: review rejected
+    end

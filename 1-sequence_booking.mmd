@@ -1,0 +1,26 @@
+sequenceDiagram
+    actor Guest
+    participant User as User (guest)
+    participant Property
+    participant ExistingBooking as Booking (existing)
+
+    Guest->>User: create_booking(property, start_date, end_date)
+    User->>Property: is_available(start_date, end_date)
+
+    loop For each existing booking
+        Property->>ExistingBooking: overlaps(start_date, end_date)
+        ExistingBooking-->>Property: overlap result
+    end
+
+    Note over Property: Available if dates are valid and no blocking booking overlaps
+    Property-->>User: availability result
+
+    alt Property is available
+        create participant NewBooking as Booking (new)
+        User->>NewBooking: Create booking
+        Note over NewBooking: Linked to the guest and property<br/>Selected dates stored and status = pending
+        NewBooking-->>User: new booking
+        User-->>Guest: pending booking
+    else Property is unavailable
+        User-->>Guest: booking request declined
+    end
